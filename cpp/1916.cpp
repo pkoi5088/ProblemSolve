@@ -1,49 +1,60 @@
 #include <iostream>
-#include <utility>
-#include <vector>
 #include <queue>
-
-#define INF 1000000001
+#include <vector>
+#include <cstring>
+#define MAX 1000
+#define endl '\n'
 
 using namespace std;
 
-int function(vector<pair<int, int>>* board, int* dist, int& start, int& end) {
+class node {
+public:
+	int now, cost;
+	node(int in, int ic) :now(in), cost(ic) {};
+};
+
+struct cmp {
+	bool operator()(node n1, node n2) {
+		return n1.cost > n2.cost;
+	}
+};
+
+vector<pair<int, int>> graph[MAX];
+
+void solve() {
+	priority_queue<node, vector<node>, cmp> pq;
+	int N, M, dist[MAX], start, end;
+	cin >> N >> M;
+	memset(dist, -1, sizeof(dist));
+	for (int i = 0; i < M; ++i) {
+		int from, to, cost;
+		cin >> from >> to >> cost;
+		graph[from - 1].push_back({ to - 1,cost });
+	}
+	cin >> start >> end;
+	start -= 1, end -= 1;
+
+	pq.push(node(start, 0));
 	dist[start] = 0;
-	priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> p_q;
-
-	p_q.push({ 0,start });
-	
-	while (!p_q.empty()) {
-		int cdist = p_q.top().first;
-		int cVertex = p_q.top().second;
-		p_q.pop();
-
-		for (int i = 0; i < board[cVertex].size(); i++) {
-			if (board[cVertex][i].first + dist[cVertex] < dist[board[cVertex][i].second]) {
-				dist[board[cVertex][i].second] = board[cVertex][i].first + dist[cVertex];
-				p_q.push({ board[cVertex][i].first,board[cVertex][i].second });
+	while (!pq.empty()) {
+		int now = pq.top().now, cost = pq.top().cost;
+		pq.pop();
+		if (dist[now] != -1 && dist[now] < cost) continue;
+		for (int i = 0; i < graph[now].size(); ++i) {
+			int next = graph[now][i].first, nextCost = cost + graph[now][i].second;
+			if (dist[next] == -1 || dist[next] > nextCost) {
+				pq.push(node(next, nextCost));
+				dist[next] = nextCost;
 			}
 		}
 	}
-	return dist[end];
+	cout << dist[end];
 }
 
 int main() {
-	int N, M, start, end;
-	cin >> N >> M;
-
-	vector<pair<int,int>>* board = new vector<pair<int, int>>[N + 1];
-	int* dist = new int[N + 1];
-	for (int i = 0; i <= N; i++)
-		dist[i] = INF;
-
-	for (int i = 0; i < M; i++) {
-		int t1, t2, d;
-		cin >> t1 >> t2 >> d;
-		board[t1].push_back({ d,t2 });
-	}
-
-	cin >> start >> end;
-	cout << function(board, dist, start, end);
+	ios_base::sync_with_stdio(0);
+	cin.tie(NULL); cout.tie(NULL);
+	//freopen("input.txt", "r", stdin);
+	solve();
 	return 0;
 }

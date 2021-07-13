@@ -1,66 +1,65 @@
 #include <iostream>
-#include <cstdio>
-#include <algorithm>
-#include <vector>
 #include <queue>
-#include <set>
-#include <map>
-#include <stack>
-#include <string>
-#define INF 100000000
+#include <vector>
+#include <cstring>
+#define MAX 1000
 #define endl '\n'
 
 using namespace std;
 
-struct Node {
-	int dist;
+class node {
+public:
 	vector<int> route;
+	int now, cost;
+	node(int in, int ic, vector<int> ir) :now(in), cost(ic), route(ir) {};
 };
 
 struct cmp {
-	bool operator()(pair<int, int> p1, pair<int, int> p2) {
-		return p1.second > p2.second;
+	bool operator()(node n1, node n2) {
+		return n1.cost > n2.cost;
 	}
 };
 
+vector<pair<int, int>> graph[MAX];
+
 void solve() {
-	int n, m, start, end;
-	vector<vector<pair<int,int>>> graph;
-	vector<Node> result;
-	cin >> n >> m;
-	graph.resize(n);
-	result.resize(n);
-	for (int i = 0; i < n; ++i)
-		result[i].dist = INF;
-	for (int i = 0; i < m; ++i) {
-		int a, b, c;
-		cin >> a >> b >> c;
-		graph[a - 1].push_back({ b - 1,c });
+	priority_queue<node, vector<node>, cmp> pq;
+	int N, M, dist[MAX], start, end;
+	vector<int> distRoute[MAX];
+	cin >> N >> M;
+	memset(dist, -1, sizeof(dist));
+	for (int i = 0; i < M; ++i) {
+		int from, to, cost;
+		cin >> from >> to >> cost;
+		graph[from - 1].push_back({ to - 1,cost });
 	}
 	cin >> start >> end;
+	start -= 1, end -= 1;
 
-	priority_queue<pair<int, int>, vector<pair<int, int>>, cmp> pq;
-	pq.push({ start - 1,0 });
-	result[start - 1].dist = 0;
-	result[start - 1].route.push_back(start - 1);
+	vector<int> tmp(1, start);
+	pq.push(node(start, 0, tmp));
+	dist[start] = 0;
+	distRoute[start] = tmp;
 	while (!pq.empty()) {
-		int now = pq.top().first, d = pq.top().second;
+		int now = pq.top().now, cost = pq.top().cost;
+		vector<int> route = pq.top().route;
 		pq.pop();
+		if (dist[now] != -1 && dist[now] < cost) continue;
 		for (int i = 0; i < graph[now].size(); ++i) {
-			int next = graph[now][i].first, cost = graph[now][i].second;
-			if (result[next].dist > d + cost) {
-				pq.push({ next,d + cost });
-				result[next].dist = d + cost;
-				result[next].route = result[now].route;
-				result[next].route.push_back(next);
+			int next = graph[now][i].first, nextCost = cost + graph[now][i].second;
+			vector<int> nextRoute = route;
+			nextRoute.push_back(next);
+			if (dist[next] == -1 || dist[next] > nextCost) {
+				pq.push(node(next, nextCost, nextRoute));
+				dist[next] = nextCost;
+				distRoute[next] = nextRoute;
 			}
 		}
 	}
-
-	cout << result[end - 1].dist << endl;
-	cout << result[end - 1].route.size() << endl;
-	for (int i = 0; i < result[end - 1].route.size(); ++i) {
-		cout << result[end - 1].route[i] + 1 << ' ';
+	cout << dist[end] << endl;
+	cout << distRoute[end].size() << endl;
+	for (int i = 0; i < distRoute[end].size(); ++i) {
+		cout << distRoute[end][i] + 1 << ' ';
 	}
 }
 
