@@ -1,6 +1,6 @@
 #include <iostream>
 #include <cstring>
-#define MAX 100
+#define MAX 101
 #define INF -1000000009
 #define endl '\n'
 
@@ -10,8 +10,8 @@ int dp[MAX][MAX / 2 + 1], arr[MAX];
 int N, M;
 
 int getDP(int n, int m) {
-	if (n < 0 || m <= 0 || 2 * m - 1 > n + 1) return INF;
-	
+	if (n <= 0 || m <= 0 || 2 * m - 1 > n + 1) return INF;
+
 	int& ret = dp[n][m];
 	if (ret != INF) return ret;
 
@@ -31,10 +31,10 @@ void solve() {
 			dp[i][j] = INF;
 
 	cin >> N >> M;
-	for (int i = 0; i < N; ++i)
+	for (int i = 1; i <= N; ++i)
 		cin >> arr[i];
 
-	cout << getDP(N - 1, M) << endl;
+	cout << getDP(N, M) << endl;
 }
 
 int main() {
