@@ -24,7 +24,7 @@ void solve() {
 	case 1:
 	case 3:
 		coin5 -= 1;
-		if (coin5 <= 0) coin2 = -1;
+		if (coin5 < 0) coin2 = -1;
 		else coin2 = ((N % 5) + 5) / 2;
 		break;
 	}
