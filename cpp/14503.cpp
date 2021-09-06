@@ -17,10 +17,14 @@ public:
 		count = 0;
 	}
 
-	bool search() {
-		int d = (dir - 1 + 4) % 4;
-		int nx = x + dx[d], ny = y + dy[d];
-		return (board[nx][ny] == 0);
+	int search() {
+		int _dir = dir;
+		for (int i = 0; i < 4; ++i) {
+			int tmp = (_dir - 1 + 4) % 4;
+			if (board[x + dx[tmp]][y + dy[tmp]] == 0) return tmp;
+			_dir = tmp;
+		}
+		return -1;
 	}
 
 	bool searchBack() {
@@ -29,13 +33,14 @@ public:
 	}
 
 	void clean() {
-		if (board[x][y] == 0)
+		if (board[x][y] == 0) {
 			count++;
+		}
 		board[x][y] = 2;
 	}
 
-	void rotate() {
-		dir = (dir - 1 + 4) % 4;
+	void rotate(int _dir) {
+		dir = _dir;
 	}
 
 	void go() {
@@ -63,30 +68,24 @@ void solve() {
 			state = 2;
 		}
 		else {
-			if (robot.search()) {
-				robot.rotate();
+			int nextDir = robot.search();
+			if (nextDir != -1) {
+				robot.rotate(nextDir);
 				robot.go();
 				state = 1;
 			}
 			else {
-				if (count == 4) {
-					if (robot.searchBack()) {
-						robot.back();
-						count = 0;
-					}
-					else {
-						break;
-					}
+				if (robot.searchBack()) {
+					robot.back();
+					count = 0;
 				}
 				else {
-					robot.rotate();
-					count++;
+					break;
 				}
 			}
 		}
-		cout << robot.x << ' ' << robot.y << ' ' << robot.dir << endl;
 	}
-	cout << robot.count;
+	cout << robot.count << endl;
 }
 
 int main() {
