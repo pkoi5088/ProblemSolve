@@ -5,6 +5,10 @@
 
 using namespace std;
 
+/*
+    https://programmers.co.kr/learn/courses/30/lessons/42890
+*/
+
 bool check[256]={false,};
 int row,col;
 

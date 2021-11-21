@@ -4,6 +4,10 @@
 
 using namespace std;
 
+/*
+	https://www.acmicpc.net/problem/5639
+*/
+
 int arr[MAX];
 int N = 0;
 

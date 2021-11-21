@@ -2,6 +2,10 @@
 
 using namespace std;
 
+/*
+    https://programmers.co.kr/learn/courses/30/lessons/12985
+*/
+
 int log2(int n){
     int ret=0;
     while(n!=1){

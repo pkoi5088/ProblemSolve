@@ -4,6 +4,10 @@
 
 using namespace std;
 
+/*
+	https://www.acmicpc.net/problem/1991
+*/
+
 //0: 왼쪽자식, 1: 오른쪽자식
 int tree[MAX][2];
 int N;

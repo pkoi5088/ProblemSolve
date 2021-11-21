@@ -5,6 +5,10 @@
 
 using namespace std;
 
+/*
+	https://www.acmicpc.net/problem/9934
+*/
+
 int tree[MAX], route[MAX];
 int K;
 

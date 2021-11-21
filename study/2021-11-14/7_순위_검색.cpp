@@ -4,6 +4,10 @@
 
 using namespace std;
 
+/*
+    https://programmers.co.kr/learn/courses/30/lessons/72412
+*/
+
 vector<int> v[4][3][3][3];
 vector<vector<string>> setIdx={
     {"-","cpp","java","python"},

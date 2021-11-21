@@ -4,6 +4,10 @@
 
 using namespace std;
 
+/*
+	https://www.acmicpc.net/problem/1068
+*/
+
 int parent[MAX], indegree[MAX] = { 0, };
 int N, node;
 
