@@ -58,7 +58,7 @@ void solve() {
 		cin >> u >> v;
 		if (u == -1 && v == -1) break;
 		else if (u == 0 && v == 0) {
-			cout << "Case " << k << " is not a tree." << endl;
+			cout << "Case " << k << " is a tree." << endl;
 			continue;
 		}
 
