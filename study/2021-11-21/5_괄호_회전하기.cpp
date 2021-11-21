@@ -4,6 +4,10 @@
 
 using namespace std;
 
+/*
+    https://programmers.co.kr/learn/courses/30/lessons/76502
+*/
+
 int dp[1000][1000];
 
 bool isOpen(char c){

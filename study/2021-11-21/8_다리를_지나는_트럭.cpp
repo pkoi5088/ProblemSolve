@@ -4,6 +4,10 @@
 
 using namespace std;
 
+/*
+    https://programmers.co.kr/learn/courses/30/lessons/42583
+*/
+
 int solution(int bridge_length, int weight, vector<int> truck_weights) {
     int answer = 0,idx=0,nowWeight=0;
     //first: weight, second: insertTime

@@ -4,6 +4,10 @@
 
 using namespace std;
 
+/*
+	https://www.acmicpc.net/problem/14675
+*/
+
 int near[MAX] = { 0, };
 int N, Q;
 

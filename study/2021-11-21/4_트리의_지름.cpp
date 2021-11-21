@@ -7,6 +7,10 @@
 
 using namespace std;
 
+/*
+	https://www.acmicpc.net/problem/1167
+*/
+
 vector<pair<int,int>> graph[MAX];
 int N;
 bool check[MAX];

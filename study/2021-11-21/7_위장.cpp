@@ -4,6 +4,10 @@
 
 using namespace std;
 
+/*
+    https://programmers.co.kr/learn/courses/30/lessons/42578
+*/
+
 int solution(vector<vector<string>> clothes) {
     int answer = 1;
     map<string,int> idxTable;

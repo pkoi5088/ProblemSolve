@@ -2,6 +2,10 @@
 #include <vector>
 using namespace std;
 
+/*
+    https://programmers.co.kr/learn/courses/30/lessons/12978
+*/
+
 int solution(int N, vector<vector<int>> road, int K) {
     vector<vector<int>> graph;
     graph.resize(N);

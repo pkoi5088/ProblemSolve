@@ -5,6 +5,10 @@
 
 using namespace std;
 
+/*
+	https://www.acmicpc.net/problem/17073
+*/
+
 int graph[MAX]={0,};
 int N,W;
 

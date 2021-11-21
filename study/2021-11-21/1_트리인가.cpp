@@ -7,6 +7,7 @@
 using namespace std;
 
 /*
+	https://www.acmicpc.net/problem/6416
 	1. 부모가 없는 노드는 하나 뿐이다.
 	2. 부모노드는 오직 하나만 존재한다.
 	3. 사이클이 형성되면 안된다.
