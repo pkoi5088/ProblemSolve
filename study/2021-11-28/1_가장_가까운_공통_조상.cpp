@@ -5,6 +5,10 @@
 
 using namespace std;
 
+/*
+    https://www.acmicpc.net/problem/3584
+*/
+
 void solve() {
     int N, A, B;
     int parent[MAX_N], check[MAX_N] = { 0, };
