@@ -3,6 +3,10 @@
 
 using namespace std;
 
+/*
+    https://programmers.co.kr/learn/courses/30/lessons/42842
+*/
+
 vector<int> solution(int brown, int yellow) {
     vector<int> answer={0,0};
     for(int i=1;i<=2500;++i){

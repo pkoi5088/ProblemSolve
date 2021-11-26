@@ -4,6 +4,10 @@
 
 using namespace std;
 
+/*
+    https://programmers.co.kr/learn/courses/30/lessons/42747
+*/
+
 int solution(vector<int> citations) {
     int answer=0,N=citations.size(),start=0,end;
     sort(citations.begin(),citations.end());

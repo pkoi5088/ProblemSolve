@@ -5,6 +5,10 @@ using namespace std;
 
 vector<bool> check;
 
+/*
+    https://www.acmicpc.net/problem/4256
+*/
+
 //k: 현재 피로도, idx: 방문한 던전, count: 던전개수
 void dfs(int idx,int count,vector<vector<int>>& dungeons,int k,int& ret){
     if(idx!=-1){

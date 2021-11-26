@@ -3,6 +3,10 @@
 
 using namespace std;
 
+/*
+    https://programmers.co.kr/learn/courses/30/lessons/87946
+*/
+
 int getIdx(int start,int end,string number){
     int ret=start;
     for(int i=start;i<=end;++i){
