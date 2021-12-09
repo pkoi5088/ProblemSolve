@@ -3,6 +3,10 @@
 
 using namespace std;
 
+/*
+    https://programmers.co.kr/learn/courses/30/lessons/77885
+*/
+
 vector<long long> solution(vector<long long> numbers) {
     vector<long long> answer;
     for(long long& number:numbers){

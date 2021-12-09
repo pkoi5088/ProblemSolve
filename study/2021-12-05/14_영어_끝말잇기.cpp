@@ -5,6 +5,10 @@
 
 using namespace std;
 
+/*
+    https://programmers.co.kr/learn/courses/30/lessons/12981
+*/
+
 vector<int> solution(int n, vector<string> words) {
     vector<int> answer;
     set<string> table;

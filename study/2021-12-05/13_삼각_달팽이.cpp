@@ -3,6 +3,10 @@
 
 using namespace std;
 
+/*
+    https://programmers.co.kr/learn/courses/30/lessons/68645
+*/
+
 vector<int> solution(int n) {
     vector<int> answer;
     if(n==1){
