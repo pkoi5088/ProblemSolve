@@ -1,8 +1,10 @@
 {
     "files.associations": {
+        "*.ejs": "html",
         "xiosbase": "cpp",
         "cstring": "cpp",
         "ios": "cpp",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "xstring": "cpp"
     }
 }
