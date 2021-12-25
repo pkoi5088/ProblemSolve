@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#define endl '\n'	
+#define endl '\n'
 
 using namespace std;
 
@@ -9,42 +9,48 @@ using namespace std;
 	https://www.acmicpc.net/problem/8980
 */
 
-class Node{
-	public:
-	int from,to,count;
-};
+bool cmp(pair<pair<int, int>, int>p1, pair<pair<int, int>, int>p2) {
+	if (p1.first.second == p2.first.second)
+		return p1.first.first < p1.first.first;
+	return p1.first.second < p2.first.second;
+}
 
-bool cmp(Node& n1,Node& n2){
-	if(n1.to==n2.to)
-		return n1.from<n2.from;
-	return n1.to<n2.to;
+int getMin(vector<int> capacity, int start, int end) {
+	int ret = capacity[start];
+	for (int i = start + 1; i < end; ++i) {
+		ret = min(ret, capacity[i]);
+	}
+	return ret;
 }
 
 void solve() {
-    int N,C,M;
-	vector<Node> village;
-	vector<int> box;
-	cin>>N>>C>>M;
-	village.resize(M);
-	box.resize(N+1,0);
-	for(int i=0;i<M;++i){
-		cin>>village[i].from>>village[i].to>>village[i].count;
+	vector<pair<pair<int, int>, int>> v;
+	vector<int> capacity;
+	int N, M, C;
+	cin >> N >> C >> M;
+	v.resize(M);
+	capacity.resize(N + 1, C);
+	for (int i = 0; i < M; ++i) {
+		cin >> v[i].first.first >> v[i].first.second >> v[i].second;
 	}
-	sort(village.begin(),village.end());
+	sort(v.begin(), v.end(), cmp);
 
-	for(int i=0;i<M;++i){
-		int start=village[i].from,end=village[i].to;
-		int minBox=min(village[i].count,C-village[i].count);
-		for(int j=start;j<=end;++j){
-			minBox=min(minBox,village[j].count);
+	int ret = 0;
+	for (int i = 0; i < M; ++i) {
+		int start = v[i].first.first, end = v[i].first.second, box = v[i].second;
+		int c = min(box, getMin(capacity, start, end));
+		ret += c;
+		for (int i = start; i < end; ++i) {
+			capacity[i] -= c;
 		}
 	}
+	cout << ret;
 }
 
 int main() {
 	ios_base::sync_with_stdio(0);
 	cin.tie(NULL); cout.tie(NULL);
-	freopen("input.txt", "r", stdin);
+	//freopen("input.txt", "r", stdin);
 	solve();
 	return 0;
 }
