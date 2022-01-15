@@ -6,7 +6,7 @@
 using namespace std;
 
 /*
-	https://www.acmicpc.net/problem/11726
+	https://www.acmicpc.net/problem/11727
 */
 
 int dp[MAX];
@@ -16,7 +16,7 @@ void solve() {
     int N;
     cin>>N;
     for(int i=2;i<=N;++i){
-        dp[i]=(dp[i-1]+dp[i-2])%MOD;
+        dp[i]=(dp[i-1]+dp[i-2]*2)%MOD;
     }
     cout<<dp[N];
 }
