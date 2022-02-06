@@ -24,7 +24,7 @@ int solution(vector<string> lines) {
         second=second*1000+stoi(ms);
         //second는 끝나는시간
         v.push_back({second-stof(tmp)*1000+1,second});
-    }
+    }    
     for(int i=0;i<lines.size();++i){
         int cutline=v[i].second+1000;
         int count=0;
