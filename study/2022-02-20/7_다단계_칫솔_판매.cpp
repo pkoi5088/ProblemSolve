@@ -9,11 +9,10 @@ using namespace std;
     https://programmers.co.kr/learn/courses/30/lessons/77486
 */
 
-vector<int> parent, indegree, profit;
+vector<int> parent, profit;
 
 vector<int> solution(vector<string> enroll, vector<string> referral, vector<string> seller, vector<int> amount) {
     map<string, int> table;
-    vector<int> answer;
     int N = enroll.size();
     parent.resize(N, -1);
     indegree.resize(N, 0);
@@ -29,7 +28,6 @@ vector<int> solution(vector<string> enroll, vector<string> referral, vector<stri
         }
         else {
             parent[i] = table[referral[i]];
-            indegree[parent[i]] += 1;
         }
     }
     //seller처리
@@ -43,9 +41,5 @@ vector<int> solution(vector<string> enroll, vector<string> referral, vector<stri
             now = p;
         }
     }
-
-    for (int i = 0; i < N; ++i) {
-        answer.push_back(profit[i]);
-    }
-    return answer;
+    return profit;
 }
