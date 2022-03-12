@@ -40,7 +40,7 @@ void solve() {
 
 	sort(v.begin(), v.end());
 	sort(tmp.begin(), tmp.end());
-	cout << round(S / N) << endl;
+	cout << (int)round(S / N) << endl;
 	cout << v[v.size() / 2] << endl;
 	cout << (tmp.size() >= 2 ? tmp[1] : tmp[0]) << endl;
 	cout << abs(R[0]-R[1]) << endl;
