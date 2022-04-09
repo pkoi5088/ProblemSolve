@@ -1,40 +1,34 @@
 #include <iostream>
-#include <cstdio>
-#include <algorithm>
-#include <vector>
-#include <queue>
-#include <set>
-#include <map>
-#include <stack>
-#include <string>
-#define MAX 30
+#define MAX 31
 #define endl '\n'
 
 using namespace std;
 
-int cntA[MAX] = { 0 }, cntB[MAX] = { 0 };
-
 void solve() {
-	int D, K, A = 0, B;
-	cin >> D >> K;
-	cntA[0] = cntB[1] = 1;
-	for (int i = 2; i < D; ++i) {
-		cntA[i] = cntA[i - 1] + cntA[i - 2];
-		cntB[i] = cntB[i - 1] + cntB[i - 2];
+	int A[MAX],B[MAX];
+	A[1]=B[2]=1;
+	A[2]=B[1]=0;
+	for(int i=3;i<MAX;++i){
+		A[i]=A[i-1]+A[i-2];
+		B[i]=B[i-1]+B[i-2];
 	}
 
-	while (K % cntB[D - 1] != 0) {
-		A += 1;
-		K -= cntA[D - 1];
+	int D,K;
+	cin>>D>>K;
+	for(int i=1;i<=K;++i){
+		for(int j=i;j<=K;++j){
+			if(A[D]*i+B[D]*j==K){
+				cout<<i<<endl<<j;
+				return;
+			}
+		}
 	}
-	B = K / cntB[D - 1];
-	cout << A << endl << B;
 }
 
 int main() {
 	ios_base::sync_with_stdio(0);
 	cin.tie(NULL); cout.tie(NULL);
-	//freopen("input.txt", "r", stdin);
+	freopen("input.txt", "r", stdin);
 	solve();
 	return 0;
 }
