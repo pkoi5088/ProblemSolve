@@ -4,6 +4,10 @@
 
 using namespace std;
 
+/*
+    https://programmers.co.kr/learn/courses/30/lessons/42892
+*/
+
 struct Node{
     int x,y,idx;
     Node(int ix,int iy,int id){
