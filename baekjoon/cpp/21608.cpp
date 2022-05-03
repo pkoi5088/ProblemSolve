@@ -6,12 +6,10 @@
 using namespace std;
 
 /*
-	https://www.acmicpc.net/problem/21608
+    https://www.acmicpc.net/problem/21608
 */
 
-vector<vector<int>> seat;
-int N;
-int dx[4]={-1,1,0,0},dy[4]={0,0,-1,1};
+int dx[4] = { -1,1,0,0 }, dy[4] = { 0,0,-1,1 };
 
 bool check(vector<int> v, int n) {
     for (int i = 0; i < v.size(); ++i) {
