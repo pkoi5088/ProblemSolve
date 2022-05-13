@@ -24,10 +24,7 @@ void solve() {
 		break;
 
 	case 2:
-		if (N == 2)
-			cout << "SK";
-		else
-			cout << "CY";
+		cout << "CY";
 		break;
 
 	case 3:
