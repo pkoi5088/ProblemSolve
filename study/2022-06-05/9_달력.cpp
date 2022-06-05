@@ -10,13 +10,6 @@ using namespace std;
     https://www.acmicpc.net/problem/20207
 */
 
-bool cmp(pair<int, int> p1, pair<int, int> p2) {
-    if (p1.first == p2.first) {
-        return p1.second - p1.first > p2.second - p2.first;
-    }
-    return p1.first < p2.first;
-}
-
 void solve() {
     vector<pair<int, int>> v;
     int cnt[366] = { 0, }, h = 0, w = 0;
