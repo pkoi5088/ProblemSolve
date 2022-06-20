@@ -1,58 +1,58 @@
 #include <iostream>
-#include <algorithm>
-#include <queue>
 #include <string>
-#define MAX 101
+#include <queue>
+#include <cstring>
+#define MAX 100
+#define endl '\n'
 
 using namespace std;
 
-int map[MAX][MAX] = { 0 };
+/*
+    https://www.acmicpc.net/problem/2178
+*/
 
-int bfs(int N, int M) {
-	queue<pair<int, int>> q;
-	q.push({ 1,1 });
-	while (!q.empty()) {
-		int x = q.front().first;
-		int y = q.front().second;
-		q.pop();
-		if (x == N && y == M)
-			return map[x][y];
+struct Node {
+    int x, y, dist;
+    Node(int ix, int iy, int id) {
+        x = ix, y = iy, dist = id;
+    }
+};
 
-		if (map[x + 1][y] == 1) {
-			q.push({ x + 1,y });
-			map[x + 1][y] = map[x][y] + 1;
-		}
-		if (map[x][y + 1] == 1) {
-			q.push({ x,y + 1 });
-			map[x][y + 1] = map[x][y] + 1;
-		}
-		if (map[x][y - 1] == 1) {
-			q.push({ x,y - 1 });
-			map[x][y - 1] = map[x][y] + 1;
-		}
-		if (map[x - 1][y] == 1) {
-			q.push({ x - 1,y });
-			map[x - 1][y] = map[x][y] + 1;
-		}
-	}
-	return -1;
+int N, M;
+string arr[MAX];
+bool visit[MAX][MAX];
+int dx[4] = { -1,1,0,0 }, dy[4] = { 0,0,-1,1 };
+
+void solve() {
+    memset(visit, false, sizeof(visit));
+    cin >> N >> M;
+    for (int i = 0; i < N; ++i) {
+        cin >> arr[i];
+    }
+    queue<Node> q;
+    q.push(Node(0, 0, 1));
+    visit[0][0] = true;
+    while (!q.empty()) {
+        int x = q.front().x, y = q.front().y, dist = q.front().dist;
+        q.pop();
+        if (x == N - 1 && y == M - 1) {
+            cout << dist;
+            return;
+        }
+
+        for (int k = 0; k < 4; ++k) {
+            int nx = x + dx[k], ny = y + dy[k];
+            if (nx < 0 || nx >= N || ny < 0 || ny >= M || visit[nx][ny] || arr[nx][ny] == '0') continue;
+            q.push(Node(nx, ny, dist + 1));
+            visit[nx][ny] = true;
+        }
+    }
 }
 
 int main() {
-	int N, M;
-	string input;
-	cin >> N >> M;
-	for (int i = 1; i <= N; i++) {
-		cin >> input;
-		cin.ignore();
-		for (int j = 0; j < M; j++)
-			map[i][j + 1] = (int)input[j] - 48;
-	}
-	for (int i = 0; i <= N; i++)
-		map[0][i] = 2;
-	for (int i = 0; i <= M; i++)
-		map[i][0] = 2;
-
-	cout << bfs(N, M);
-	return 0;
+    ios_base::sync_with_stdio(0);
+    cin.tie(NULL); cout.tie(NULL);
+    //freopen("input.txt", "r", stdin);
+    solve();
+    return 0;
 }
