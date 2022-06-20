@@ -7,6 +7,10 @@
 
 using namespace std;
 
+/*
+	https://www.acmicpc.net/problem/2667
+*/
+
 int dx[4] = { -1,1,0,0 }, dy[4] = { 0,0,-1,1 };
 
 void solve() {
