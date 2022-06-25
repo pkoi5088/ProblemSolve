@@ -1,16 +1,13 @@
 #include <iostream>
-#include <cstdio>
-#include <algorithm>
-#include <vector>
 #include <queue>
-#include <set>
-#include <map>
-#include <stack>
-#include <string>
-#define MAX 100001
 #define endl '\n'
+#define MAX 100001
 
 using namespace std;
+
+/*
+    https://www.acmicpc.net/problem/13549
+*/
 
 void solve() {
 	vector<bool> visit;
@@ -43,9 +40,9 @@ void solve() {
 }
 
 int main() {
-	ios_base::sync_with_stdio(0);
-	cin.tie(NULL); cout.tie(NULL);
-	//freopen("input.txt", "r", stdin);
-	solve();
-	return 0;
+    ios_base::sync_with_stdio(0);
+    cin.tie(NULL); cout.tie(NULL);
+    //freopen("input.txt", "r", stdin);
+    solve();
+    return 0;
 }
