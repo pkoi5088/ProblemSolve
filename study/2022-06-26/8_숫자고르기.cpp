@@ -4,6 +4,10 @@
 
 using namespace std;
 
+/*
+	https://www.acmicpc.net/problem/2668
+*/
+
 int num[MAX];
 
 bool isInCycle(int n) {
