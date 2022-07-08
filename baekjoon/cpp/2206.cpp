@@ -1,66 +1,77 @@
 #include <iostream>
-#include <cstdio>
-#include <algorithm>
+#include <string>
 #include <vector>
 #include <queue>
-#include <string>
+#define endl '\n'
+#define MAX 1000
 
 using namespace std;
 
-class Node {
-public:
-	int x, y, dist, state;
-	Node(int ix, int iy, int id, int is) :x(ix), y(iy), dist(id), state(is) {};
-};
+/*
+	https://www.acmicpc.net/problem/2206
+*/
 
-int graph[1000][1000] = { 0, };
-bool visit[1000][1000][2] = { false, };
-int dx[4] = { 0,0,-1,1 }, dy[4] = { -1,1,0,0 }; //좌 우 상 하
+int dx[4] = { -1,1,0,0 }, dy[4] = { 0,0,-1,1 };
+int dist[MAX][MAX][2];
+vector<string> arr;
 int N, M;
 
-int bfs() {
-	queue<Node> q;
-	q.push(Node(0, 0, 1, 0));
-	visit[0][0][0] = true;
+int min(int a, int b) {
+	if (a == -1) return b;
+	else if (b == -1) return a;
+	return a < b ? a : b;
+}
+
+void solve() {
+	cin >> N >> M;
+	arr.resize(N);
+	for (int i = 0; i < N; ++i) {
+		cin >> arr[i];
+		for (int j = 0; j < M; ++j) {
+			dist[i][j][0] = dist[i][j][1] = -1;
+		}
+	}
+
+	queue<pair<pair<int, int>, pair<int, int>>> q;
+	q.push({ {0,0},{1,0} });
+	dist[0][0][0] = 1;
 	while (!q.empty()) {
-		int x = q.front().x, y = q.front().y, dist = q.front().dist, state = q.front().state;
+		int x = q.front().first.first, y = q.front().first.second;
+		int d = q.front().second.first, flag = q.front().second.second;
 		q.pop();
-		if (x == N - 1 && y == M - 1)
-			return dist;
-		for (int d = 0; d < 4; d++) {
-			int nx = x + dx[d], ny = y + dy[d];
-			if (nx >= 0 && nx < N && ny >= 0 && ny < M) {
-				if (graph[nx][ny] == 0 && visit[nx][ny][state] == false) {
-					visit[nx][ny][state] = true;
-					q.push(Node(nx, ny, dist + 1, state));
+		
+		for (int k = 0; k < 4; ++k) {
+			int nx = x + dx[k], ny = y + dy[k];
+			if (nx < 0 || nx >= N || ny < 0 || ny >= M) continue;
+
+			if (flag) {
+				if (arr[nx][ny] == '1' || dist[nx][ny][flag] != -1) continue;
+				q.push({ {nx,ny},{d + 1,flag} });
+				dist[nx][ny][flag] = d + 1;
+			}
+			else {
+				if (arr[nx][ny] == '1') {
+					q.push({ { nx,ny }, { d + 1,1 } });
+					dist[nx][ny][1] = d + 1;
 				}
-				if (state == 0 && graph[nx][ny] == 1 && visit[nx][ny][1] == false) {
-					visit[nx][ny][1] = true;
-					q.push(Node(nx, ny, dist + 1, 1));
+				else {
+					if (dist[nx][ny][flag] != -1)
+						continue;
+					q.push({ { nx,ny }, { d + 1,flag } });
+					dist[nx][ny][flag] = d + 1;
 				}
 			}
 		}
 	}
-	return -1;
-}
 
-int solve() {
-	cin >> N >> M;
-	for (int i = 0; i < N; i++) {
-		string s;
-		cin >> s;
-		for (int j = 0; j < M; j++) {
-			graph[i][j] = s[j] - '0';
-		}
-	}
-
-	return bfs();
+	int ret = min(dist[N - 1][M - 1][0], dist[N - 1][M - 1][1]);
+	cout << ret;
 }
 
 int main() {
 	ios_base::sync_with_stdio(0);
 	cin.tie(NULL); cout.tie(NULL);
 	//freopen("input.txt", "r", stdin);
-	cout << solve() << '\n';
+	solve();
 	return 0;
 }
