@@ -1,112 +1,82 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
+#include <queue>
+#include <cstring>
+#include <cmath>
 #define endl '\n'
-#define MAX 40
+#define MAX 50
 
 using namespace std;
 
 /*
-	https://www.acmicpc.net/problem/18808
+	https://www.acmicpc.net/problem/16234
 */
 
-class Sticker {
-public:
-	int _N, _M;
-	vector<vector<int>> arr;
+int N, L, R;
+int A[MAX][MAX], dx[4] = { -1,1,0,0 }, dy[4] = { 0,0,-1,1 };
+bool check[MAX][MAX];
 
-	void init() {
-		cin >> _N >> _M;
-		arr.resize(_N);
-		for (int i = 0; i < _N; ++i) {
-			arr[i].resize(_M);
-		}
+bool function() {
+	bool ret = false;
+	vector<vector<pair<int, int>>> v;
+	memset(check, false, sizeof(check));
+	
+	for (int i = 0; i < N; ++i) {
+		for (int j = 0; j < N; ++j) {
+			if (check[i][j]) continue;
+			vector<pair<int, int>> tmp;
+			queue<pair<int, int>> q;
+			q.push({ i,j });
+			check[i][j] = true;
+			tmp.push_back({ i,j });
+			while (!q.empty()) {
+				int x = q.front().first, y = q.front().second;
+				q.pop();
 
-		for (int i = 0; i < _N; ++i) {
-			for (int j = 0; j < _M; ++j) {
-				cin >> arr[i][j];
-			}
-		}
-	}
-
-	void rotate() {
-		vector<vector<int>> tmp;
-		tmp.resize(_M);
-		for (int i = 0; i < _M; ++i) {
-			tmp[i].resize(_N);
-		}
-
-		for (int i = 0; i < _N; ++i) {
-			for (int j = 0; j < _M; ++j) {
-				tmp[j][_N - i - 1] = arr[i][j];
-			}
-		}
-		swap(_N, _M);
-		arr = tmp;
-	}
-};
-
-int N, M, K, ret = 0;
-vector<Sticker> v;
-int board[MAX][MAX] = { 0, };
-
-//board에 idx를 붙일수 있는가
-bool check(int x, int y, int idx) {
-	for (int i = 0; i < v[idx]._N; ++i) {
-		for (int j = 0; j < v[idx]._M; ++j) {
-			if (board[x + i][y + j] == 1 && v[idx].arr[i][j] == 1) {
-				return false;
-			}
-		}
-	}
-	return true;
-}
-
-//board에 idx를 붙인다.
-void attach(int x, int y, int idx) {
-	for (int i = 0; i < v[idx]._N; ++i) {
-		for (int j = 0; j < v[idx]._M; ++j) {
-			board[x + i][y + j] += v[idx].arr[i][j];
-		}
-	}
-}
-
-//idx번 스티커를 붙인다
-void dfs(int idx) {
-	if (idx >= K) {
-		int tmp = 0;
-		for (int i = 0; i < N; ++i) {
-			for (int j = 0; j < M; ++j) {
-				if (board[i][j]) tmp += 1;
-			}
-		}
-		ret = max(ret, tmp);
-		return;
-	}
-	//붙인적이 있는가?
-	bool flag = false;
-	for (int l = 0; l < 4; ++l) {
-		for (int i = 0; i < N - v[idx]._N + 1; ++i) {
-			for (int j = 0; j < M - v[idx]._M + 1; ++j) {
-				if (check(i, j, idx)) {
-					attach(i, j, idx);
-					dfs(idx + 1);
-					return;
+				for (int k = 0; k < 4; ++k) {
+					int nx = x + dx[k], ny = y + dy[k];
+					if (nx < 0 || nx >= N || ny < 0 || ny >= N || check[nx][ny]) continue;
+					if (abs(A[x][y] - A[nx][ny]) >= L && abs(A[x][y] - A[nx][ny]) <= R) {
+						q.push({ nx,ny });
+						check[nx][ny] = true;
+						tmp.push_back({ nx,ny });
+					}
 				}
 			}
+
+			if (tmp.size() >= 2) {
+				ret = true;
+				v.push_back(tmp);
+			}
 		}
-		v[idx].rotate();
 	}
-	dfs(idx + 1);
+
+	for (int i = 0; i < v.size(); ++i) {
+		int S = 0;
+		for (int j = 0; j < v[i].size(); ++j) {
+			int x = v[i][j].first, y = v[i][j].second;
+			S += A[x][y];
+		}
+		for (int j = 0; j < v[i].size(); ++j) {
+			int x = v[i][j].first, y = v[i][j].second;
+			A[x][y] = S / v[i].size();
+		}
+	}
+	return ret;
 }
 
 void solve() {
-	cin >> N >> M >> K;
-	v.resize(K);
-	for (int i = 0; i < K; ++i) {
-		v[i].init();
+	cin >> N >> L >> R;
+	for (int i = 0; i < N; ++i) {
+		for (int j = 0; j < N; ++j) {
+			cin >> A[i][j];
+		}
 	}
-	dfs(0);
+
+	int ret = 0;
+	while (function()) {
+		ret += 1;
+	}
 	cout << ret;
 }
 
