@@ -13,6 +13,9 @@ vector<vector<int>> arr;
 int r, c, k;
 
 bool cmp(pair<int, int>p1, pair<int, int>p2) {
+	if (p1.second == p2.second) {
+		return p1.first < p2.first;
+	}
 	return p1.second < p2.second;
 }
 
@@ -28,6 +31,7 @@ void R() {
 		sort(sortV.begin(), sortV.end());
 
 		for (int idx = 0; idx < sortV.size(); ++idx) {
+			if (sortV[idx] == 0) continue;
 			if (tmp[i].empty() || tmp[i].back().first != sortV[idx]) {
 				tmp[i].push_back({ sortV[idx],1 });
 			}
@@ -47,10 +51,21 @@ void R() {
 	for (int i = 0; i < tmp.size(); ++i) {
 		sort(tmp[i].begin(), tmp[i].end(), cmp);
 		for (int j = 0; j < tmp[i].size(); ++j) {
-			ret[i][2*j] = tmp[i][j].first;
+			ret[i][2 * j] = tmp[i][j].first;
 			ret[i][2 * j + 1] = tmp[i][j].second;
 		}
 	}
+
+	//최대 사이즈 조정
+	while (ret.size() > 100) {
+		ret.pop_back();
+	}
+	for (int i = 0; i < ret.size(); ++i) {
+		while (ret[i].size() > 100) {
+			ret[i].pop_back();
+		}
+	}
+
 	arr = ret;
 }
 
@@ -66,6 +81,7 @@ void C() {
 		sort(sortV.begin(), sortV.end());
 
 		for (int idx = 0; idx < sortV.size(); ++idx) {
+			if (sortV[idx] == 0) continue;
 			if (tmp[i].empty() || tmp[i].back().first != sortV[idx]) {
 				tmp[i].push_back({ sortV[idx],1 });
 			}
@@ -85,10 +101,21 @@ void C() {
 	for (int i = 0; i < tmp.size(); ++i) {
 		sort(tmp[i].begin(), tmp[i].end(), cmp);
 		for (int j = 0; j < tmp[i].size(); ++j) {
-			ret[2*j][i] = tmp[i][j].first;
+			ret[2 * j][i] = tmp[i][j].first;
 			ret[2 * j + 1][i] = tmp[i][j].second;
 		}
 	}
+
+	//최대 사이즈 조정
+	while (ret.size() > 100) {
+		ret.pop_back();
+	}
+	for (int i = 0; i < ret.size(); ++i) {
+		while (ret[i].size() > 100) {
+			ret[i].pop_back();
+		}
+	}
+
 	arr = ret;
 }
 
@@ -101,10 +128,10 @@ void solve() {
 			cin >> arr[i][j];
 		}
 	}
-	
+
 	int ret = 0;
-	while (ret < 100) {
-		if (arr[r][c] == k) {
+	while (ret <= 100) {
+		if (arr.size() - 1 >= r && arr[r].size() - 1 >= c && arr[r][c] == k) {
 			cout << ret;
 			return;
 		}
