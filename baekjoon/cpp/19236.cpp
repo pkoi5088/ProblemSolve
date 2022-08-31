@@ -54,7 +54,6 @@ void fishMoving(vector<vector<pair<int, int>>>& arr, int sharkX, int sharkY) {
 //상어의 위치, 방향, 여태까지 먹은 번호의 합
 void search(vector<vector<pair<int, int>>> arr, int sharkX, int sharkY, int sharkDir, int count) {
 	fishMoving(arr, sharkX, sharkY);
-
 	vector<pair<int, int>> nextVector;
 	int nx = sharkX, ny = sharkY;
 	while (!(nx < 0 || nx >= MAX || ny < 0 || ny >= MAX)) {
