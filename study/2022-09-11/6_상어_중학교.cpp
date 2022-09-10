@@ -28,8 +28,8 @@ int ret = 0, dx[4] = { -1,1,0,0 }, dy[4] = { 0,0,-1,1 };
 
 pair<int, int> max(pair<int, int> a, pair<int, int> b) {
 	if (a.first == b.first)
-		return a.second > b.second ? a : b;
-	return a.first > b.first ? a : b;
+		return a.second < b.second ? a : b;
+	return a.first < b.first ? a : b;
 }
 
 //그룹 분류 -2는 빈칸
@@ -157,7 +157,7 @@ void solve() {
 int main() {
 	ios_base::sync_with_stdio(0);
 	cin.tie(NULL); cout.tie(NULL);
-	freopen("input.txt", "r", stdin);
+	//freopen("input.txt", "r", stdin);
 	solve();
 	return 0;
 }
