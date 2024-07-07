@@ -1,12 +1,14 @@
 #include <iostream>
 #define endl '\n'
 
+#pragma region INPUT_MACRO
 #define INPUT_TESTCASE	\
 	int T;				\
 	cin>>T;				\
 	while(T--)			\
 		solve();		
 #define INPUT solve();
+#pragma endregion
 
 using namespace std;
 
